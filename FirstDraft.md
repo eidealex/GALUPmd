@@ -1,6 +1,17 @@
 # Integrated Decision Units (IDUs)
----
+
 ## What are IDUs and how are they useful?
+
+Land units are areas with properties that differ sufficiently from those of
+other land units to affect their suitability for different land uses.
+Although any parcel of land can be considered a land unit, it is more efficient
+and meaningful to use parcels that can be adequately described in terms of one
+or a combination of land properties.
+A land unit should therefore represent an area that is, in terms of
+predetermined properties, different from the surrounding land and can be
+assumed to have **homogeneous** land properties.
+
+![FAO land evaluation framework](https://www.fao.org/3/U1980E/u1980e09.jpg)
 
 Integrated Decision Units (IDUs) are a set of spatial containers, modeled as a set of polygon-based 
 Geographic Information System (GIS) coverages containing spatially explicit depictions of landscape 
