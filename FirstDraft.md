@@ -41,37 +41,48 @@ critical step to achieving a spatially explicit land-use plan.
 
 ## Section 2  
 ### Summarize key functions
+**Pixels to Points**
+**Select by Attribute**
+**Extract Selected Features**
+**Rasterize**
+**Pixels to Points**
+**Raster Calculator**
+**Reclassify by Table**
+**Proximity**
+**Merge**
 
-`iSDA_MGRS.tif` as input for **r.to.vect** output is `Vectorized`  
-`Vectorized` as input for **Extract by Attribute** output is `Extracted`
-- **Extract by Attribute** where `Vectorized` value field is equal to 6  
-`Extracted` as input for **v.to.rast** output is `Rasterized`  
-`Rasterized` as input for **Raster pixels to points** output is `Vector points`  
-`Vector points` as input for **DBSCAN Clustering** output is `Clusters`
+`iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
+`Vector points` as input for **Extract by Attribute**
+- **Extract by Attribute** where the vector points value is equal to '6'
+- `Extracted (attribute)` is the output here
+
+`Extracted (attribute` as input for **DBSCAN Clustering** output is `Clusters`
 - The parameters for the **DBSCAN Clustering** are: 25 for minimum cluster size and 500 meters as maximum distance between clustered points  
-`Clusters` as input for **Extract by Attribute** output is `Extracted (Attribute)`  
+
+`Clusters` as input for **Extract by Attribute** output is `Extracted (Attribute)` 
+- We are going to be extracting each of the clusters by their cluster ID 
 `Extracted (Attribute)` as input for **Rasterize** output is `Rasterized`  
+
 `Rasterized` as input for **Proximity** output is `Distance`
 - `Distance` output is 'area of influence'  
 Repeat the last three steps until you have created an 'area of influence' for all of your clusters
-We are going to use use raster calculator in order to combine these rasters.
-here is another change to push
 
 
 
 
-The essence of this workflow is to create urban IDUs based on suitability anylysis(?). 
+
+The essence of this workflow is to create urban IDUs based on suitability analysis(?). 
 First we need to convert the raster layer into a vector/polygon layer. We do this in order to use the **Extract by Attribute** function to show us what land has been deemed urban. In this case, the number '6' has been designated as urban.
 In the GRASS toolbox within QGIS there is a function called **r.to.vect**. This function, as its name implies, converts a raster layer (input) to a vector layer (output). 
 Using the **r.to.vect** tool, we are going to convert the `iSDA_MGRS` raster layer to `iSDA_MGRS.v`.
 
 _probably a screenshot/video here_
 
-Next we need to extract the areas that are the urban land use designation - '6'. The tool for this is called **Extract by Attribute** which is located in the deafult QGIS toolbox. 
+Next we need to extract the areas that are the urban land use designation - '6'. The tool for this is called **Extract by Attribute** which is located in the default QGIS toolbox. 
 
 _probably a screenshot/video here_
 
-After we extract the urabn areas that we want, the next step is to convert those areas to point clusters. Since we cannot convert polygons straight to points, we must convert the `iSDA_MGRS.v` layer back to raster. The tool for this is called **v.to.rast** located in the GRASS toolbox.
+After we extract the urban areas that we want, the next step is to convert those areas to point clusters. Since we cannot convert polygons straight to points, we must convert the `iSDA_MGRS.v` layer back to raster. The tool for this is called **v.to.rast** located in the GRASS toolbox.
 
 _probably a screenshot/video here_
 
