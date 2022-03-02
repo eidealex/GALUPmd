@@ -43,38 +43,19 @@ critical step to achieving a spatially explicit land-use plan.
 ### Summarize key functions
 
 **DBSCAN clustering**
-- Gas stations in Ghana
+- The example that we are going to use is of Gas stations in Ghana. The DBSCAN clustering tool can be used to identify clusters of gas stations.
 
-**Proximity**
-- 
+**Proximity and Raster Calculator**
+- Euclidean Distance of each of the clusters. In order to create a an area and strength of influence for each cluster, we can use the raster calculator to add the rasters together and assign them weights.
+- The weighting formula that we will use is: 1/W*Cluster
+- W = # of points in a cluster / # of total points
 
 **Reclassify by Table**
-
-**raster calculator** 
 
 **cross**
 
 **subdivide**
 
-
-## Tools that I used in the creation of `poly_inner` and `poly_outer`
-**For Pixels to Points always set the output cell size to be GEOREFERENCED UNITS**
-
-**Select by Attribute**
-
-**Extract Selected Features**
-
-**Rasterize**
-
-**Pixels to Points**
-
-**Raster Calculator**
-
-**Reclassify by Table**
-
-**Proximity**
-
-**Merge**
 
 `iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
 `Vector points` as input for **Extract by Attribute**
@@ -90,4 +71,6 @@ critical step to achieving a spatially explicit land-use plan.
 
 `Rasterized` as input for **Proximity** output is `Distance`
 - `Distance` output is 'area of influence'  
-Repeat the last three steps until you have created an 'area of influence' for all of your clusters
+
+Repeat the last three steps until you have created an 'area of influence' for all of your clusters.
+Once the proximity maps have been created for each cluster, we are going to weight them and add them all together.
