@@ -55,6 +55,7 @@ critical step to achieving a spatially explicit land-use plan.
 - `Distance` output is 'area of influence'  
 Repeat the last three steps until you have created an 'area of influence' for all of your clusters
 We are going to use use raster calculator in order to combine these rasters.
+here is another change to push
 
 
 
