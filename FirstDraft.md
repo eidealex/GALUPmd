@@ -54,6 +54,7 @@ critical step to achieving a spatially explicit land-use plan.
 `Rasterized` as input for **Proximity** output is `Distance`
 - `Distance` output is 'area of influence'  
 Repeat the last three steps until you have created an 'area of influence' for all of your clusters
+We are going to use use raster calculator in order to combine these rasters.
 
 
 
