@@ -41,14 +41,39 @@ critical step to achieving a spatially explicit land-use plan.
 
 ## Section 2  
 ### Summarize key functions
-**Pixels to Points**
-**Select by Attribute**
-**Extract Selected Features**
-**Rasterize**
-**Pixels to Points**
-**Raster Calculator**
-**Reclassify by Table**
+
+**DBSCAN clustering**
+- Gas stations in Ghana
+
 **Proximity**
+- 
+
+**Reclassify by Table**
+
+**raster calculator** 
+
+**cross**
+
+**subdivide**
+
+
+## Tools that I used in the creation of `poly_inner` and `poly_outer`
+**For Pixels to Points always set the output cell size to be GEOREFERENCED UNITS**
+
+**Select by Attribute**
+
+**Extract Selected Features**
+
+**Rasterize**
+
+**Pixels to Points**
+
+**Raster Calculator**
+
+**Reclassify by Table**
+
+**Proximity**
+
 **Merge**
 
 `iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
@@ -66,30 +91,3 @@ critical step to achieving a spatially explicit land-use plan.
 `Rasterized` as input for **Proximity** output is `Distance`
 - `Distance` output is 'area of influence'  
 Repeat the last three steps until you have created an 'area of influence' for all of your clusters
-
-
-
-
-
-The essence of this workflow is to create urban IDUs based on suitability analysis(?). 
-First we need to convert the raster layer into a vector/polygon layer. We do this in order to use the **Extract by Attribute** function to show us what land has been deemed urban. In this case, the number '6' has been designated as urban.
-In the GRASS toolbox within QGIS there is a function called **r.to.vect**. This function, as its name implies, converts a raster layer (input) to a vector layer (output). 
-Using the **r.to.vect** tool, we are going to convert the `iSDA_MGRS` raster layer to `iSDA_MGRS.v`.
-
-_probably a screenshot/video here_
-
-Next we need to extract the areas that are the urban land use designation - '6'. The tool for this is called **Extract by Attribute** which is located in the default QGIS toolbox. 
-
-_probably a screenshot/video here_
-
-After we extract the urban areas that we want, the next step is to convert those areas to point clusters. Since we cannot convert polygons straight to points, we must convert the `iSDA_MGRS.v` layer back to raster. The tool for this is called **v.to.rast** located in the GRASS toolbox.
-
-_probably a screenshot/video here_
-
-Now that we have extracted the urban areas and converted them back to raster, they can now be converted to points. We do this in order to run a clustering algorithm, **DBSCAN**, to determine where our urban clusters are. The conversion from raster to point is done using the **raster pixels to points** tool located in the default QGIS toolbox.
-
-_probably a screenshot/video here_
-
-Using the points layer that we just created, it's time to calculate where our urban clusters are located. The tool for this task is the **DBSCAN clustering** tool in the default QGIS toolbox. 
-
-_probably a screenshot/video here_
