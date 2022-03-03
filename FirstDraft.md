@@ -33,17 +33,16 @@ a vector (polygon) representation is more applicable than a raster representatio
 have a system of polygons, such as IDUs, to begin with. This is the first, however, 
 critical step to achieving a spatially explicit land-use plan.
 
-# First draft workflow for IDU development in QGIS
 
-## Alex's general conventions:
-**GIS Tools**  
-`raster and polygon layers`  
+## Key Functions
 
-## Section 2  
-### Summarize key functions
-
-**DBSCAN clustering**
+### **DBSCAN clustering**
 - The example that we are going to use is of Gas stations in Ghana. The DBSCAN clustering tool can be used to identify clusters of gas stations.
+
+![Ghana Gas stations over view](./pictures/Gas_Stations_Overview.png)
+
+![Ghana Gas stations clusters](./pictures/Gas_Stations_Clusters.png)
+
 
 **Proximity and Raster Calculator**
 - Euclidean Distance of each of the clusters. In order to create a an area and strength of influence for each cluster, we can use the raster calculator to add the rasters together and assign them weights.
