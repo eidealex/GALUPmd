@@ -37,11 +37,20 @@ critical step to achieving a spatially explicit land-use plan.
 ## Key Functions
 
 ### **DBSCAN clustering**
-- The example that we are going to use is of Gas stations in Ghana. The DBSCAN clustering tool can be used to identify clusters of gas stations.
+| Input       | Output      |
+| ----------- | ----------- |
+| ![Ghana Gas stations clusters](./pictures/GhanaGS.png)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
 
-![Ghana Gas stations over view](./pictures/Gas_Stations_Overview.png)
+In this example, the location of gas stations are represented by the green points on the input map. There is no definite way to identify clusters just by looking at the points, so instead we use the density-based spatial clustering of applications with noise (DBSCAN) algorithm. QGIS includes a tool called **DBSCAN clustering** which allows the user to input a layer of points to be processed by the DBSCAN algorithm. Besides the input layer being vector points, the only required parameters for the **DBSCAN clustering** tool are minimum cluster size and maximum distance between clustered points.  
 
-![Ghana Gas stations clusters](./pictures/Gas_Stations_Clusters.png)
+The input layer is `gas_station`  
+Minimum cluster size is 10  
+Maximum distance between clustered points is 5000
+
+| Input parameters for DBSCAN clustering             |
+|----------------------------------------------------|
+|![DBSCAN clustering gif](./pictures/DBSCANinput.gif)|
+
 
 
 **Proximity and Raster Calculator**
