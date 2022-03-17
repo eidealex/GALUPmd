@@ -48,12 +48,14 @@ critical step to achieving a spatially explicit land-use plan.
 - Euclidean Distance of each of the clusters. In order to create a an area and strength of influence for each cluster, we can use the raster calculator to add the rasters together and assign them weights.
 - The weighting formula that we will use is: 1/W*Cluster
 - W = # of points in a cluster / # of total points
+- The most widely used distance decay models are those in which distance is introduced as an inverse function to some power, typically 1 or 2. Thus the value of some variable of interest, z, at location j, zj, might be modeled as some function, f(), of attribute values, zi, associated with other locations, i, weighted by the inverse of the distance separating locations i and j, dij raised to a power, β:
 
-**Reclassify by Table**
 
-**cross**
+**Reclassify by Table** is a tool that assigns new values to a raster band based on a user specified table.
 
-**subdivide**
+**r.cross** is a tool that takes the cross product of multiple raster category values.
+
+**subdivide** is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
 
 
 `iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
@@ -73,3 +75,7 @@ critical step to achieving a spatially explicit land-use plan.
 
 Repeat the last three steps until you have created an 'area of influence' for all of your clusters.
 Once the proximity maps have been created for each cluster, we are going to weight them and add them all together.
+
+
+## Assignment/Result
+Create IDU for a different district based on the process detailed above
