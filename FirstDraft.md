@@ -34,22 +34,39 @@ have a system of polygons, such as IDUs, to begin with. This is the first, howev
 critical step to achieving a spatially explicit land-use plan.
 
 
-## Key Functions
 
-### **DBSCAN clustering**
-| Input       | Output      |
-| ----------- | ----------- |
-| ![Ghana Gas stations clusters](./pictures/GhanaGS.png)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
+## 1. **DBSCAN clustering**
+For **Defined distance (DBSCAN)**, if the **Minimum Features per Cluster** can be found within the 
+**Search Distance** from a particular point, that point will be marked as a core-point and included 
+in a cluster, along with all points within the core-distance. A border-point is a point that is 
+within the search distance of a core-point but does not itself have the minimum number of features 
+within the search distance. Each resulting cluster is composed of core-points and border-points, 
+where core-points tend to fall in the middle of the cluster and border-points fall on the exterior. 
+If a point does not have the minimum number of features within the search distance and is not a 
+within the search distance of another core-point (in other words, it is neither a core-point nor 
+a border-point), it is marked as a noise point and not included in any cluster.
 
-In this example, the location of gas stations are represented by the green points on the input map. There is no definite way to identify clusters just by looking at the points, so instead we use the density-based spatial clustering of applications with noise (DBSCAN) algorithm. QGIS includes a tool called **DBSCAN clustering** which allows the user to input a layer of points to be processed by the DBSCAN algorithm. Besides the input layer being vector points, the only required parameters for the **DBSCAN clustering** tool are minimum cluster size and maximum distance between clustered points.  
+![DBSCAN illustration](./pictures/DBSCANex.png)
 
-The input layer is `gas_station`  
-Minimum cluster size is 10  
-Maximum distance between clustered points is 5000
+### 1.1 Usage
+This tool is used to detect areas where points are concentrated and where they are separated by
+areas that are empty or sparse. Points that are not part of a cluster are labeled as noise.
+The results from running the DBSCAN algorithm help us identify points that make up a cluster
+and points that are noise.
 
-| Input parameters for DBSCAN clustering             |
-|----------------------------------------------------|
-|![DBSCAN clustering gif](./pictures/DBSCANinput.gif)|
+### 1.2 Example
+As an example, we will use **DBSCAN clustering** to identify clusters of gas stations within
+Ghana. The datasets used are listed below:
+
+| ID | File Name       | Data Format | Type  | Description                     |
+|----|-----------------|-------------|-------|---------------------------------|
+| 1  | gas_station.shp | vector      | point | Gas station locations in Ghana  |
+
+The two figures below display the parameter settings and the output of the tool.
+
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![Ghana Gas stations clusters](./pictures/DBSCANpmtrs.jpg)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
 
 
 
