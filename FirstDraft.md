@@ -1,4 +1,4 @@
-# Integrated Decision Units (IDUs)
+# Module 3 - Integrated Decision Units (IDUs)
 
 ## What are IDUs and how are they useful?
 
@@ -34,8 +34,8 @@ have a system of polygons, such as IDUs, to begin with. This is the first, howev
 critical step to achieving a spatially explicit land-use plan.
 
 
-
-## 1. **DBSCAN clustering**
+## Key Functions
+### 1. DBSCAN clustering
 For **Defined distance (DBSCAN)**, if the **Minimum Features per Cluster** can be found within the 
 **Search Distance** from a particular point, that point will be marked as a core-point and included 
 in a cluster, along with all points within the core-distance. A border-point is a point that is 
@@ -70,7 +70,7 @@ The two figures below display the parameter settings and the output of the tool.
 
 
 
-## 2 **Proximity**
+### 2. Proximity
 The **Proximity** tool calculates the Euclidean distance from the center of the source cell 
 to the center of each of the surrounding cells. Conceptually, the Euclidean algorithm works 
 as follows: for each cell, the distance to each source cell is determined by calculating 
@@ -107,7 +107,7 @@ The two figures below illustrate the parameters and output of the **Proximity** 
 
 
 
-## 3 **Raster Calculator**
+### 3. Raster Calculator
 The **Raster calculator** tool allows you to create and execute a Map Algebra expression
 that will output a raster. We will be using a distance decay model in order to assign
 weights to each cluster. Distance decay, also known as the Gravity Model or the 
@@ -136,7 +136,7 @@ The figures below show the parameters and output of the **Raster calculator** to
 
 
 
-## 4 **Reclassify by Table** 
+### 4. Reclassify by Table 
 **Reclassify by table** is a tool that reclassifies a raster band by assigning new class values based on
 ranges specified in a fixed table.
 
@@ -151,36 +151,22 @@ This tool is used to reclassify raster values.
 
 The figures below show the parameters and output for the **Reclassify by table** tool.
 
+> :pushpin: Check the details of an image:  
+> If you can't see the image clearly, click on the image to view it in a
+> new page, which will show the image in its original size.
+
 | Parameter Settings       | Table parameters      | Output|
 | ------------------------ | ----------- |--------|
 | ![Reclassify parameters](./pictures/RclsfyP1.jpg) | ![Reclassify table parameters](./pictures/RclsfyP2.jpg)|![Raster Calculator output](./pictures/RclsfyEx.jpg)|
 
 
-## 5 **r.cross** 
-is a tool that takes the cross product of multiple raster category values.
+### 5. Delete Holes
 
 
-## 6 **subdivide** 
+
+### 6. Subdivide 
 is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
 
-
-`iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
-`Vector points` as input for **Extract by Attribute**
-- **Extract by Attribute** where the vector points value is equal to '6'
-- `Extracted (attribute)` is the output here
-
-`Extracted (attribute` as input for **DBSCAN Clustering** output is `Clusters`
-- The parameters for the **DBSCAN Clustering** are: 25 for minimum cluster size and 500 meters as maximum distance between clustered points  
-
-`Clusters` as input for **Extract by Attribute** output is `Extracted (Attribute)` 
-- We are going to be extracting each of the clusters by their cluster ID 
-`Extracted (Attribute)` as input for **Rasterize** output is `Rasterized`  
-
-`Rasterized` as input for **Proximity** output is `Distance`
-- `Distance` output is 'area of influence'  
-
-Repeat the last three steps until you have created an 'area of influence' for all of your clusters.
-Once the proximity maps have been created for each cluster, we are going to weight them and add them all together.
 
 
 ## Assignment/Result
