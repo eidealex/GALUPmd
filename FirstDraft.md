@@ -95,9 +95,9 @@ and are measured from cell center to cell center.
 Now we will use the **Proximity** tool in order to determine the Euclidean distance from 
 a gas station cluster to the rest of the raster cells.
 
-| ID | File Name      | Data Format | Description                       |
-|----|----------------|-------------|-----------------------------------|
-| 1  | r_cluster1.tif | raster      | Euclidean distance from cluster 1 |
+| ID | File Name      | Data Format | Description                |
+|----|----------------|-------------|----------------------------|
+| 1  | r_cluster1.tif | raster      | Cluster 1 in raster format |
 
 The two figures below illustrate the parameters and output of the **Proximity** tool.
 
@@ -106,10 +106,32 @@ The two figures below illustrate the parameters and output of the **Proximity** 
 | ![Proximity parameters](./pictures/ProximityPmtrs.jpg)| ![Cluster 1 distance](./pictures/ProximityRasEx.jpg)|
 
 ## 3 **Raster Calculator**
+The **Raster calculator** tool allows you to create and execute a Map Algebra expression
+that will output a raster. We will be using a distance decay model in order to assign
+weights to each cluster. Distance decay, also known as the Gravity Model or the 
+Inverse Square Law, is the tendency of a spatial relationship between one place and 
+another to weaken as the distance between them increases.
+
+### 3.1 Usage
+The **Raster calculator** tool is used to individually weight and multiply proximity 
+rasters together.
 - The weighting formula that we will use is: 1/W*Cluster
 - W = # of points in a cluster / # of total points
-- The most widely used distance decay models are those in which distance is introduced as an inverse function to some power, typically 1 or 2. Thus the value of some variable of interest, z, at location j, zj, might be modeled as some function, f(), of attribute values, zi, associated with other locations, i, weighted by the inverse of the distance separating locations i and j, dij raised to a power, β:
-  
+
+
+### 3.2 Example
+
+| ID | File Name            | Data Format | Description                       |
+|----|----------------------|-------------|-----------------------------------|
+| 1  | cluster1_euc_dst.tif | raster      | Euclidean distance from cluster 1 |
+| 2  | cluster2_euc_dst.tif | raster      | Euclidean distance from cluster 2 |
+
+The figures below show the parameters and output of the **Raster calculator** tool.
+
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![Raster calculator parameters](./pictures/RastCalcPrmtrs.jpg)| ![Raster Calculator output](./pictures/RastCalcEx.jpg)|
+
 ## 4 **Reclassify by Table** 
 is a tool that assigns new values to a raster band based on a user specified table.
 
