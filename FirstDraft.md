@@ -105,6 +105,8 @@ The two figures below illustrate the parameters and output of the **Proximity** 
 | ------------------------ | ----------- |
 | ![Proximity parameters](./pictures/ProximityPmtrs.jpg)| ![Cluster 1 distance](./pictures/ProximityRasEx.jpg)|
 
+
+
 ## 3 **Raster Calculator**
 The **Raster calculator** tool allows you to create and execute a Map Algebra expression
 that will output a raster. We will be using a distance decay model in order to assign
@@ -132,11 +134,31 @@ The figures below show the parameters and output of the **Raster calculator** to
 | ------------------------ | ----------- |
 | ![Raster calculator parameters](./pictures/RastCalcPrmtrs.jpg)| ![Raster Calculator output](./pictures/RastCalcEx.jpg)|
 
+
+
 ## 4 **Reclassify by Table** 
-is a tool that assigns new values to a raster band based on a user specified table.
+**Reclassify by table** is a tool that reclassifies a raster band by assigning new class values based on
+ranges specified in a fixed table.
+
+### 4.1 Usage
+This tool is used to reclassify raster values. 
+
+### 4.2 Example
+
+| ID | File Name              | Data Format | Description                                            |
+|----|------------------------|-------------|--------------------------------------------------------|
+| 1  | euc_cluster_output.tif | raster      | Result of adding together the weighted clusters 1 and 2|
+
+The figures below show the parameters and output for the **Reclassify by table** tool.
+
+| Parameter Settings       | Table parameters      | Output|
+| ------------------------ | ----------- |--------|
+| ![Reclassify parameters](./pictures/RclsfyP1.jpg) | ![Reclassify table parameters](./pictures/RclsfyP2.jpg)|![Raster Calculator output](./pictures/RclsfyEx.jpg)|
+
 
 ## 5 **r.cross** 
 is a tool that takes the cross product of multiple raster category values.
+
 
 ## 6 **subdivide** 
 is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
