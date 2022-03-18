@@ -66,22 +66,58 @@ The two figures below display the parameter settings and the output of the tool.
 
 | Parameter Settings       | Output      |
 | ------------------------ | ----------- |
-| ![Ghana Gas stations clusters](./pictures/DBSCANpmtrs.jpg)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
+| ![DBSCAN parameters](./pictures/DBSCANpmtrs.jpg)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
 
 
 
-**Proximity and Raster Calculator**
-- Euclidean Distance of each of the clusters. In order to create a an area and strength of influence for each cluster, we can use the raster calculator to add the rasters together and assign them weights.
+## 2 **Proximity**
+The **Proximity** tool calculates the Euclidean distance from the center of the source cell 
+to the center of each of the surrounding cells. Conceptually, the Euclidean algorithm works 
+as follows: for each cell, the distance to each source cell is determined by calculating 
+the hypotenuse with x_max and y_max as the other two legs of the triangle. This calculation
+derives the true Euclidean distance, rather than the cell distance. The shortest distance 
+to a source is determined, and if it is less than the specified maximum distance, the 
+value is assigned to the cell location on the output raster.
+
+
+![Euclidean distance using trig](./pictures/EucDistEx2.gif)
+
+
+### 2.1 Usage
+This tool gives the measured Euclidean distance from every cell to the nearest source.
+The distances are measured in the projection units of the raster, such as feet or meters,
+and are measured from cell center to cell center.
+
+>:pushpin: The projected units of a raster layer can be found under the _information_ tab
+> in the layer properties
+
+### 2.2 Example
+Now we will use the **Proximity** tool in order to determine the Euclidean distance from 
+a gas station cluster to the rest of the raster cells.
+
+| ID | File Name      | Data Format | Description                       |
+|----|----------------|-------------|-----------------------------------|
+| 1  | r_cluster1.tif | raster      | Euclidean distance from cluster 1 |
+
+The two figures below illustrate the parameters and output of the **Proximity** tool.
+
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![Proximity parameters](./pictures/ProximityPmtrs.jpg)| ![Cluster 1 distance](./pictures/ProximityRasEx.jpg)|
+
+## 3 **Raster Calculator**
 - The weighting formula that we will use is: 1/W*Cluster
 - W = # of points in a cluster / # of total points
 - The most widely used distance decay models are those in which distance is introduced as an inverse function to some power, typically 1 or 2. Thus the value of some variable of interest, z, at location j, zj, might be modeled as some function, f(), of attribute values, zi, associated with other locations, i, weighted by the inverse of the distance separating locations i and j, dij raised to a power, β:
+  
+## 4 **Reclassify by Table** 
+is a tool that assigns new values to a raster band based on a user specified table.
 
+## 5 **r.cross** 
+is a tool that takes the cross product of multiple raster category values.
 
-**Reclassify by Table** is a tool that assigns new values to a raster band based on a user specified table.
-
-**r.cross** is a tool that takes the cross product of multiple raster category values.
-
-**subdivide** is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
+## 6 **subdivide** 
+is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
 
 
 `iSDA_MGRS.tif` as input for **Raster pixels to points** output is `Vector points`  
