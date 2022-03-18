@@ -160,12 +160,22 @@ The figures below show the parameters and output for the **Reclassify by table**
 | ![Reclassify parameters](./pictures/RclsfyP1.jpg) | ![Reclassify table parameters](./pictures/RclsfyP2.jpg)|![Raster Calculator output](./pictures/RclsfyEx.jpg)|
 
 
-### 5. Delete Holes
+### 5. Eliminate selected polygons (Delete Holes)
 
 
 
 ### 6. Subdivide 
-is a tool that divides input geometry into smaller parts, based on the maximum number of nodes specified by the user. 
+is a tool that subdivides the original geometry into smaller parts, where no part has more
+than the specified maximum number of nodes. 
+
+### 6.1 Usage
+The **subdivide** tool is used to break down complex geometries into more manageable parts.
+
+### 6.2 Example
+
+| ID | File Name      | Data Format |Type    | Description                     |
+|----|----------------|-------------|--------|---------------------------------|
+| 1  | study_area.shp | vector      |polygon | Geographic area to be subdivided|
 
 
 
