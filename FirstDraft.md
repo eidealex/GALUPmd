@@ -1,4 +1,4 @@
-# Integrated Decision Units (IDUs)
+# Module 3 - Integrated Decision Units (IDUs)
 
 ## What are IDUs and how are they useful?
 
@@ -34,50 +34,151 @@ a vector (polygon) representation is more applicable than a raster representatio
 have a system of polygons, such as IDUs, to begin with. This is the first, however, 
 critical step to achieving a spatially explicit land-use plan.
 
-## First draft workflow for IDU development in QGIS
 
-## Alex's general conventions:
-**GIS Tools**  
-`raster and polygon layers`  
+## Key Functions
+### 1. DBSCAN clustering
+For **Defined distance (DBSCAN)**, if the **Minimum Features per Cluster** can be found within the 
+**Search Distance** from a particular point, that point will be marked as a core-point and included 
+in a cluster, along with all points within the core-distance. A border-point is a point that is 
+within the search distance of a core-point but does not itself have the minimum number of features 
+within the search distance. Each resulting cluster is composed of core-points and border-points, 
+where core-points tend to fall in the middle of the cluster and border-points fall on the exterior. 
+If a point does not have the minimum number of features within the search distance and is not a 
+within the search distance of another core-point (in other words, it is neither a core-point nor 
+a border-point), it is marked as a noise point and not included in any cluster.
 
-## Section 2  
-### Summarize key functions
+![DBSCAN illustration](./pictures/DBSCANex.png)
 
-`iSDA_MGRS.tif` as input for **r.to.vect** output is `Vectorized`  
-`Vectorized` as input for **Extract by Attribute** output is `Extracted`
-- **Extract by Attribute** where `Vectorized` value field is equal to 6  
-`Extracted` as input for **v.to.rast** output is `Rasterized`  
-`Rasterized` as input for **Raster pixels to points** output is `Vector points`  
-`Vector points` as input for **DBSCAN Clustering** output is `Clusters`
-- The parameters for the **DBSCAN Clustering** are: 25 for minimum cluster size and 500 meters as maximum distance between clustered points  
-`Clusters` as input for **Extract by Attribute** output is `Extracted (Attribute)`  
-`Extracted (Attribute)` as input for **Rasterize** output is `Rasterized`  
-`Rasterized` as input for **Proximity** output is `Distance`
-- `Distance` output is 'area of influence'  
-Repeat the last three steps until you have created an 'area of influence' for all of your clusters
+### 1.1 Usage
+This tool is used to detect areas where points are concentrated and where they are separated by
+areas that are empty or sparse. Points that are not part of a cluster are labeled as noise.
+The results from running the DBSCAN algorithm help us identify points that make up a cluster
+and points that are noise.
+
+### 1.2 Example
+As an example, we will use **DBSCAN clustering** to identify clusters of gas stations within
+Ghana. The datasets used are listed below:
+
+| ID | File Name       | Data Format | Type  | Description                     |
+|----|-----------------|-------------|-------|---------------------------------|
+| 1  | gas_station.shp | vector      | point | Gas station locations in Ghana  |
+
+The two figures below display the parameter settings and the output of the tool.
+
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![DBSCAN parameters](./pictures/DBSCANpmtrs.jpg)| ![Ghana Gas stations clusters](./pictures/GhanaGS_clus.png)|
 
 
 
+### 2. Proximity
+The **Proximity** tool calculates the Euclidean distance from the center of the source cell 
+to the center of each of the surrounding cells. Conceptually, the Euclidean algorithm works 
+as follows: for each cell, the distance to each source cell is determined by calculating 
+the hypotenuse with x_max and y_max as the other two legs of the triangle. This calculation
+derives the true Euclidean distance, rather than the cell distance. The shortest distance 
+to a source is determined, and if it is less than the specified maximum distance, the 
+value is assigned to the cell location on the output raster.
 
-The essence of this workflow is to create urban IDUs based on suitability anylysis(?). 
-First we need to convert the raster layer into a vector/polygon layer. We do this in order to use the **Extract by Attribute** function to show us what land has been deemed urban. In this case, the number '6' has been designated as urban.
-In the GRASS toolbox within QGIS there is a function called **r.to.vect**. This function, as its name implies, converts a raster layer (input) to a vector layer (output). 
-Using the **r.to.vect** tool, we are going to convert the `iSDA_MGRS` raster layer to `iSDA_MGRS.v`.
 
-_probably a screenshot/video here_
+![Euclidean distance using trig](./pictures/EucDistEx2.gif)
 
-Next we need to extract the areas that are the urban land use designation - '6'. The tool for this is called **Extract by Attribute** which is located in the deafult QGIS toolbox. 
 
-_probably a screenshot/video here_
+### 2.1 Usage
+This tool gives the measured Euclidean distance from every cell to the nearest source.
+The distances are measured in the projection units of the raster, such as feet or meters,
+and are measured from cell center to cell center.
 
-After we extract the urabn areas that we want, the next step is to convert those areas to point clusters. Since we cannot convert polygons straight to points, we must convert the `iSDA_MGRS.v` layer back to raster. The tool for this is called **v.to.rast** located in the GRASS toolbox.
+>:pushpin: The projected units of a raster layer can be found under the _information_ tab
+> in the layer properties
 
-_probably a screenshot/video here_
+### 2.2 Example
+Now we will use the **Proximity** tool in order to determine the Euclidean distance from 
+a gas station cluster to the rest of the raster cells.
 
-Now that we have extracted the urban areas and converted them back to raster, they can now be converted to points. We do this in order to run a clustering algorithm, **DBSCAN**, to determine where our urban clusters are. The conversion from raster to point is done using the **raster pixels to points** tool located in the default QGIS toolbox.
+| ID | File Name      | Data Format | Description                |
+|----|----------------|-------------|----------------------------|
+| 1  | r_cluster1.tif | raster      | Cluster 1 in raster format |
 
-_probably a screenshot/video here_
+The two figures below illustrate the parameters and output of the **Proximity** tool.
 
-Using the points layer that we just created, it's time to calculate where our urban clusters are located. The tool for this task is the **DBSCAN clustering** tool in the default QGIS toolbox. 
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![Proximity parameters](./pictures/ProximityPmtrs.jpg)| ![Cluster 1 distance](./pictures/ProximityRasEx.jpg)|
 
-_probably a screenshot/video here_
+
+
+### 3. Raster Calculator
+The **Raster calculator** tool allows you to create and execute a Map Algebra expression
+that will output a raster. We will be using a distance decay model in order to assign
+weights to each cluster. Distance decay, also known as the Gravity Model or the 
+Inverse Square Law, is the tendency of a spatial relationship between one place and 
+another to weaken as the distance between them increases.
+
+### 3.1 Usage
+The **Raster calculator** tool is used to individually weight and multiply proximity 
+rasters together.
+- The weighting formula that we will use is: 1/W*Cluster
+- W = # of points in a cluster / # of total points
+
+
+### 3.2 Example
+
+| ID | File Name            | Data Format | Description                       |
+|----|----------------------|-------------|-----------------------------------|
+| 1  | cluster1_euc_dst.tif | raster      | Euclidean distance from cluster 1 |
+| 2  | cluster2_euc_dst.tif | raster      | Euclidean distance from cluster 2 |
+
+The figures below show the parameters and output of the **Raster calculator** tool.
+
+| Parameter Settings       | Output      |
+| ------------------------ | ----------- |
+| ![Raster calculator parameters](./pictures/RastCalcPrmtrs.jpg)| ![Raster Calculator output](./pictures/RastCalcEx.jpg)|
+
+
+
+### 4. Reclassify by Table 
+**Reclassify by table** is a tool that reclassifies a raster band by assigning new class values based on
+ranges specified in a fixed table.
+
+### 4.1 Usage
+This tool is used to reclassify raster values. 
+
+### 4.2 Example
+
+| ID | File Name              | Data Format | Description                                            |
+|----|------------------------|-------------|--------------------------------------------------------|
+| 1  | euc_cluster_output.tif | raster      | Result of adding together the weighted clusters 1 and 2|
+
+The figures below show the parameters and output for the **Reclassify by table** tool.
+
+> :pushpin: Check the details of an image:  
+> If you can't see the image clearly, click on the image to view it in a
+> new page, which will show the image in its original size.
+
+| Parameter Settings       | Table parameters      | Output|
+| ------------------------ | ----------- |--------|
+| ![Reclassify parameters](./pictures/RclsfyP1.jpg) | ![Reclassify table parameters](./pictures/RclsfyP2.jpg)|![Raster Calculator output](./pictures/RclsfyEx.jpg)|
+
+
+### 5. Eliminate selected polygons (Delete Holes)
+
+
+
+### 6. Subdivide 
+is a tool that subdivides the original geometry into smaller parts, where no part has more
+than the specified maximum number of nodes. 
+
+### 6.1 Usage
+The **subdivide** tool is used to break down complex geometries into more manageable parts.
+
+### 6.2 Example
+
+| ID | File Name      | Data Format |Type    | Description                     |
+|----|----------------|-------------|--------|---------------------------------|
+| 1  | study_area.shp | vector      |polygon | Geographic area to be subdivided|
+
+
+
+## Assignment/Result
+Create IDU for a different district based on the process detailed above
