@@ -25,7 +25,8 @@ Since IDUs are created based on traits of a landscape, the area within an IDU is
 so a single uniform decision can be made about that IDU without worrying about conflicts caused by heterogeneity.
 
 ### The meaning of a set of spatially explicit polygons to land use planning
-IDUs essentially are a set of polygons with definite boundaries. 
+
+IDUs essentially are a set of polygons with definite boundaries.
 We assign a specific use for each IDU (based on suitability analysis). This assignment is simply referred to
 as a land-use decision. 
 Since land-use decisions are intrinsically discrete (two adjacent parcels can have different uses, for example), 
@@ -33,7 +34,7 @@ a vector (polygon) representation is more applicable than a raster representatio
 have a system of polygons, such as IDUs, to begin with. This is the first, however, 
 critical step to achieving a spatially explicit land-use plan.
 
-# First draft workflow for IDU development in QGIS
+## First draft workflow for IDU development in QGIS
 
 ## Alex's general conventions:
 **GIS Tools**  
