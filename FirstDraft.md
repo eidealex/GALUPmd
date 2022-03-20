@@ -1,9 +1,17 @@
-# Module 3 - Integrated Decision Units (IDUs)
+# Integrated Decision Units (IDUs) for Land Use Suitability Modeling
 
-## What are IDUs and how are they useful?
+> "_**Land units**, or land-mapping units, are areas with and qualities that
+> **differ sufficiently** from those of other land units to affect their
+> suitability for different land uses._"
 
-Land units are areas with properties that differ sufficiently from those of
-other land units to affect their suitability for different land uses.
+## Some key concepts behind IDU
+
+- Land Unit: areas of land with specific characteristics (or qualities).
+- Land Characteristic: simple attribute that can be measured or estimated. For
+  example, _mean annual rainfall_.
+- Land Quality: a complex attribute that usually reflects the interaction of
+  many land characteristics, such as _susceptibility to flooding_.
+
 Although any parcel of land can be considered a land unit, it is more efficient
 and meaningful to use parcels that can be adequately described in terms of one
 or a combination of land properties.
@@ -11,15 +19,17 @@ A land unit should therefore represent an area that is, in terms of
 predetermined properties, different from the surrounding land and can be
 assumed to have **homogeneous** land properties.
 
-![FAO land evaluation framework](https://www.fao.org/3/U1980E/u1980e09.jpg)
+| ![FAO land evaluation framework](https://www.fao.org/3/U1980E/u1980e09.jpg) |
+|:----:|
+| _Source_: FAO. (1984). Land evaluation for development. |
 
-Integrated Decision Units (IDUs) are a set of spatial containers, modeled as a set of polygon-based 
-Geographic Information System (GIS) coverages containing spatially explicit depictions of landscape 
-attributes and patterns.
+Integrated Decision Units (IDUs) are a set of spatial containers, modeled as a
+set of polygon-based Geographic Information System (GIS) coverages containing
+spatially explicit depictions of landscape attributes and patterns.
 
 IDUs are created based on information from multiple sources, such as parcel-level information, 
 floodplain delineations, and soil permeability. By using vector-based GIS including intersection, 
-expansion, grouping, etc, we can merge the information together to generate a layer of IDUs.
+expansion, grouping, etc., we can merge the information together to generate a layer of IDUs.
 
 Since IDUs are created based on traits of a landscape, the area within an IDU is deemed homogeneous, 
 so a single uniform decision can be made about that IDU without worrying about conflicts caused by heterogeneity.
