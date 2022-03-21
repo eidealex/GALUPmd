@@ -1,9 +1,10 @@
 # Integrated Decision Units (IDUs) for Land Use Suitability Modeling
 
 - [Integrated Decision Units (IDUs) for Land Use Suitability Modeling](#integrated-decision-units-idus-for-land-use-suitability-modeling)
-  - [1. An integral part of Land Use Planning](#1-an-integral-part-of-land-use-planning)
-    - [1.1 Some key concepts](#11-some-key-concepts)
-    - [The meaning of a set of spatially explicit polygons to land use planning](#the-meaning-of-a-set-of-spatially-explicit-polygons-to-land-use-planning)
+  - [1. Introduction](#1-introduction)
+    - [1.1 An Integral Part of Land-Use Planning](#11-an-integral-part-of-land-use-planning)
+    - [1.2 Some key concepts](#12-some-key-concepts)
+    - [1.3 Implication of IDU](#13-implication-of-idu)
   - [Key Functions](#key-functions)
     - [1. DBSCAN clustering](#1-dbscan-clustering)
     - [1.1 Usage](#11-usage)
@@ -17,19 +18,58 @@
     - [4. Reclassify by Table](#4-reclassify-by-table)
     - [4.1 Usage](#41-usage)
     - [4.2 Example](#42-example)
-    - [5. Eliminate selected polygons (Delete Holes)](#5-eliminate-selected-polygons-delete-holes)
-    - [6. Subdivide](#6-subdivide)
-    - [6.1 Usage](#61-usage)
-    - [6.2 Example](#62-example)
+    - [5. Subdivide](#5-subdivide)
+    - [5.1 Usage](#51-usage)
+    - [5.2 Example](#52-example)
   - [Assignment/Result](#assignmentresult)
+  - [Reference](#reference)
 
-## 1. An integral part of Land Use Planning
+## 1. Introduction
+
+This workshop is the third of a series workshops offered by the Ghana Land Use
+Project (GALUP).
+As suggested by the title, the workshop deals with creating Integrated Decision
+Units (**IDUs**), a vector geographic data represented in polygons.
+Two major applications of IDU includes:
+
+- demarcation of a tract of land into smaller (homogeneous) parcels
+- creation of (mapping) units for geospatial analysis
+
+We introduce a technical solution for creating IDUs in **QGIS**.
+We will begin by introducing the conceptual framework IDU is based on; then,
+moving onto QGIS functions that involved in the particular solution; and,
+finally, looking at an example of the THLD District in Ghana.
+
+### 1.1 An Integral Part of Land-Use Planning
+
+In 1976, the Food and Agriculture Organization (FAO) of the United Nations
+published <a href="#a framework for land evaluation">
+<i>A Framework for Land Evaluation</i></a>, in which a system of philosophy and
+principles on the evaluation of land potential was developed.
+The **_framework_** was tested and adopted in many countries.
+In 1990, FAO published another report,
+<a href="#land evaluation for development">
+<i>Land Evaluation for Development</i></a>,
+reiterated the significance of reliable **land evaluation** in the context of
+land-use planning and rural development, i.e., developing a rural area into
+a denser (urban) area.
+In this newer report, land evaluation and its relationship to (i.e., being a
+part of) the overall land-use planning process was further elaborated.
+As shown in the figure below, land evaluation is a procedure between Stage 2
+and Stage 6, as well as a part of the Stage 7.
+
+| ![FAO land evaluation framework](https://www.fao.org/3/U1980E/u1980e01.jpg) |
+|:---------------------------------------------------------------------------:|
+| Fig 1. The process of land-use planning. _Source_: FAO. (1990).             |
+
+The Stage 4, in parallel with identifying land uses (Stage 3), is identifying
+land units, e.g., IDUs.
+
+### 1.2 Some key concepts
 
 > "_**Land units**, or land-mapping units, are areas with and qualities that
 > **differ sufficiently** from those of other land units to affect their
 > suitability for different land uses._"
-
-### 1.1 Some key concepts
 
 - Land Unit: areas of land with specific characteristics (or qualities).
 - Land Characteristic: simple attribute that can be measured or estimated. For
@@ -44,31 +84,30 @@ A land unit should therefore represent an area that is, in terms of
 predetermined properties, different from the surrounding land and can be
 assumed to have **homogeneous** land properties.
 
-| ![FAO land evaluation framework](https://www.fao.org/3/U1980E/u1980e09.jpg) |
-|:----:|
-| _Source_: FAO. (1984). Land evaluation for development. |
-
-Integrated Decision Units (IDUs) are a set of spatial containers, modeled as a
-set of polygon-based Geographic Information System (GIS) coverages containing
+IDUs essentially are a set of spatial containers, modeled as a set of
+polygon-based Geographic Information System (GIS) coverages containing
 spatially explicit depictions of landscape attributes and patterns.
 
-IDUs are created based on information from multiple sources, such as parcel-level information, 
-floodplain delineations, and soil permeability. By using vector-based GIS including intersection, 
-expansion, grouping, etc., we can merge the information together to generate a layer of IDUs.
+IDUs are created based on information from multiple sources, such as
+parcel-level information, floodplain delineations, and soil permeability.
+By using vector-based GIS including intersection, expansion, grouping, etc., we
+can merge the information together to generate a layer of IDUs.
 
-Since IDUs are created based on traits of a landscape, the area within an IDU is deemed homogeneous, 
-so a single uniform decision can be made about that IDU without worrying about conflicts caused by heterogeneity.
+Since IDUs are created based on traits of a landscape, the area within an IDU
+is deemed homogeneous, so a single uniform decision can be made about that IDU
+without worrying about conflicts caused by heterogeneity.
 
-### The meaning of a set of spatially explicit polygons to land use planning
+### 1.3 Implication of IDU
 
 IDUs essentially are a set of polygons with definite boundaries.
-We assign a specific use for each IDU (based on suitability analysis). This assignment is simply referred to
-as a land-use decision. 
-Since land-use decisions are intrinsically discrete (two adjacent parcels can have different uses, for example), 
-a vector (polygon) representation is more applicable than a raster representation. That's why we need to 
-have a system of polygons, such as IDUs, to begin with. This is the first, however, 
-critical step to achieving a spatially explicit land-use plan.
-
+We assign a specific use for each IDU (based on suitability analysis).
+This assignment is simply referred to as a land-use decision.
+Since land-use decisions are intrinsically discrete (two adjacent parcels can
+have different uses, for example), a vector (polygon) representation is more
+applicable than a raster representation.
+That's why we need to have a system of polygons, such as IDUs, to begin with.
+This is the first, however, critical step to achieving a spatially explicit
+land-use plan.
 
 ## Key Functions
 ### 1. DBSCAN clustering
@@ -218,3 +257,8 @@ The figures below show the parameters and output for the **Subdivide** tool.
 
 ## Assignment/Result
 Create IDU for a different district based on the process detailed above
+
+## Reference
+
+1. <a id="a framework for land evaluation"></a>FAO. (1976). A framework for land evaluation (No. 32; Soils Bulletins). Food and Agriculture Organization of the United Nations. http://www.fao.org/3/X5310E/x5310e00.htm
+2. <a id="land evaluation for development"></a>FAO. (1990). Land evaluation for development. Food and Agriculture Organization of the United Nations. https://www.fao.org/3/U1980E/u1980e00.htm
