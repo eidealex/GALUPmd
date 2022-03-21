@@ -1,10 +1,35 @@
 # Integrated Decision Units (IDUs) for Land Use Suitability Modeling
 
+- [Integrated Decision Units (IDUs) for Land Use Suitability Modeling](#integrated-decision-units-idus-for-land-use-suitability-modeling)
+  - [1. An integral part of Land Use Planning](#1-an-integral-part-of-land-use-planning)
+    - [1.1 Some key concepts](#11-some-key-concepts)
+    - [The meaning of a set of spatially explicit polygons to land use planning](#the-meaning-of-a-set-of-spatially-explicit-polygons-to-land-use-planning)
+  - [Key Functions](#key-functions)
+    - [1. DBSCAN clustering](#1-dbscan-clustering)
+    - [1.1 Usage](#11-usage)
+    - [1.2 Example](#12-example)
+    - [2. Proximity](#2-proximity)
+    - [2.1 Usage](#21-usage)
+    - [2.2 Example](#22-example)
+    - [3. Raster Calculator](#3-raster-calculator)
+    - [3.1 Usage](#31-usage)
+    - [3.2 Example](#32-example)
+    - [4. Reclassify by Table](#4-reclassify-by-table)
+    - [4.1 Usage](#41-usage)
+    - [4.2 Example](#42-example)
+    - [5. Eliminate selected polygons (Delete Holes)](#5-eliminate-selected-polygons-delete-holes)
+    - [6. Subdivide](#6-subdivide)
+    - [6.1 Usage](#61-usage)
+    - [6.2 Example](#62-example)
+  - [Assignment/Result](#assignmentresult)
+
+## 1. An integral part of Land Use Planning
+
 > "_**Land units**, or land-mapping units, are areas with and qualities that
 > **differ sufficiently** from those of other land units to affect their
 > suitability for different land uses._"
 
-## Some key concepts behind IDU
+### 1.1 Some key concepts
 
 - Land Unit: areas of land with specific characteristics (or qualities).
 - Land Characteristic: simple attribute that can be measured or estimated. For
