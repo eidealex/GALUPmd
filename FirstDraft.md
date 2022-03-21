@@ -21,8 +21,10 @@
     - [5. Subdivide](#5-subdivide)
     - [5.1 Usage](#51-usage)
     - [5.2 Example](#52-example)
-  - [Assignment/Result](#assignmentresult)
+  - [Exercise and Post-training Survey](#exercise-and-post-training-survey)
   - [Reference](#reference)
+  - [Exercise 1](#exercise-1)
+    - [1. Skills Practiced](#1-skills-practiced)
 
 ## 1. Introduction
 
@@ -245,9 +247,9 @@ In our case, this tool allows us to subdivide large areas of land into IDU's.
 
 ### 5.2 Example
 
-| ID | File Name      | Data Format |Type    | Description                     |
-|----|----------------|-------------|--------|---------------------------------|
-| 1  | study_area.shp | vector      |polygon | Geographic area to be subdivided|
+| ID | File Name        | Data Format |Type    | Description                     |
+|----|------------------|-------------|--------|---------------------------------|
+| 1  | subdivide_ex.shp | vector      |polygon | Geographic area to be subdivided|
 
 The figures below show the parameters and output for the **Subdivide** tool.
 
@@ -255,10 +257,23 @@ The figures below show the parameters and output for the **Subdivide** tool.
 | ------------------------ | ----------- |
 | ![Raster calculator parameters](./pictures/SubDivParameters.jpg)| ![Subdivide output](./pictures/SubDivEx.jpg)|
 
-## Assignment/Result
-Create IDU for a different district based on the process detailed above
+## Exercise and Post-training Survey
+* Please complete the Exercise 1.
+* Please take this post-training survey (required).
 
 ## Reference
 
 1. <a id="a framework for land evaluation"></a>FAO. (1976). A framework for land evaluation (No. 32; Soils Bulletins). Food and Agriculture Organization of the United Nations. http://www.fao.org/3/X5310E/x5310e00.htm
 2. <a id="land evaluation for development"></a>FAO. (1990). Land evaluation for development. Food and Agriculture Organization of the United Nations. https://www.fao.org/3/U1980E/u1980e00.htm
+
+
+## Exercise 1
+### 1. Skills Practiced
+* Development of IDU's
+
+This exercise will utilize the following tools:
+1. DBSCAN Clustering
+2. Proximity
+3. Raster Calculator
+4. Reclassify by Table
+5. Subdivide
