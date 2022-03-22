@@ -5,22 +5,14 @@
     - [1.1 An Integral Part of Land-Use Planning](#11-an-integral-part-of-land-use-planning)
     - [1.2 Some key concepts](#12-some-key-concepts)
     - [1.3 Implication of IDU](#13-implication-of-idu)
-  - [Key Functions](#key-functions)
-    - [1. DBSCAN clustering](#1-dbscan-clustering)
-    - [1.1 Usage](#11-usage)
-    - [1.2 Example](#12-example)
-    - [2. Proximity](#2-proximity)
-    - [2.1 Usage](#21-usage)
-    - [2.2 Example](#22-example)
-    - [3. Raster Calculator](#3-raster-calculator)
-    - [3.1 Usage](#31-usage)
-    - [3.2 Example](#32-example)
-    - [4. Reclassify by Table](#4-reclassify-by-table)
-    - [4.1 Usage](#41-usage)
-    - [4.2 Example](#42-example)
-    - [5. Subdivide](#5-subdivide)
-    - [5.1 Usage](#51-usage)
-    - [5.2 Example](#52-example)
+  - [2. Key Functions](#2-key-functions)
+    - [2.1 DBSCAN clustering](#21-dbscan-clustering)
+    - [2.2 Proximity](#22-proximity)
+    - [2.3 Raster Calculator](#23-raster-calculator)
+    - [2.4 Reclassify by Table](#24-reclassify-by-table)
+    - [2.5 Subdivide](#25-subdivide)
+  - [3. IDU Workflow (This list is currently just for Alex so he doesn't forget](#3-idu-workflow-this-list-is-currently-just-for-alex-so-he-doesnt-forget)
+  - [where he left off)](#where-he-left-off)
   - [Exercise and Post-training Survey](#exercise-and-post-training-survey)
   - [Reference](#reference)
   - [Exercise 1](#exercise-1)
@@ -111,33 +103,38 @@ That's why we need to have a system of polygons, such as IDUs, to begin with.
 This is the first, however, critical step to achieving a spatially explicit
 land-use plan.
 
-## Key Functions
-### 1. DBSCAN clustering
-For **Defined distance (DBSCAN)**, if the **Minimum Features per Cluster** can be found within the 
-**Search Distance** from a particular point, that point will be marked as a core-point and included 
-in a cluster, along with all points within the core-distance. A border-point is a point that is 
-within the search distance of a core-point but does not itself have the minimum number of features 
-within the search distance. Each resulting cluster is composed of core-points and border-points, 
-where core-points tend to fall in the middle of the cluster and border-points fall on the exterior. 
-If a point does not have the minimum number of features within the search distance and is not a 
-within the search distance of another core-point (in other words, it is neither a core-point nor 
-a border-point), it is marked as a noise point and not included in any cluster.
+## 2. Key Functions
 
-![DBSCAN illustration](./pictures/DBSCANex.png)
+### 2.1 DBSCAN clustering
+For **Defined distance (DBSCAN)**, if the **Minimum Features per Cluster** can
+be found within the **Search Distance** from a particular point, that point 
+will be marked as a core-point and included in a cluster, along with all points
+within the core-distance. A border-point is a point that is within the search
+distance of a core-point but does not itself have the minimum number of 
+features within the search distance. Each resulting cluster is composed of 
+core-points and border-points, where core-points tend to fall in the middle of 
+the cluster and border-points fall on the exterior. If a point does not have 
+the minimum number of features within the search distance and is not a within 
+the search distance of another core-point (in other words, it is neither a 
+core-point nor a border-point), it is marked as a noise point and not included 
+in any cluster.
 
-### 1.1 Usage
-This tool is used to detect areas where points are concentrated and where they are separated by
-areas that are empty or sparse. Points that are not part of a cluster are labeled as noise.
-The results from running the DBSCAN algorithm help us identify points that make up a cluster
-and points that are noise.
+|![DBSCAN illustration](./pictures/DBSCANex.png) |
+|:----------------------------------------------:|
+|Fig. 2 How DBSCAN is calculated. _Source_: [ESRI.](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/how-density-based-clustering-works.htm)| 
 
-### 1.2 Example
-As an example, we will use **DBSCAN clustering** to identify clusters of gas stations within
-Ghana. The datasets used are listed below:
+- **Usage**: This tool is used to detect areas where points are concentrated 
+  and where they are separated by areas that are empty or sparse. Points that 
+  are not part of a cluster are labeled as noise. The results from running the 
+  DBSCAN algorithm help us identify points that make up a cluster and points 
+  that are noise.
 
-| ID | File Name       | Data Format | Type  | Description                     |
-|----|-----------------|-------------|-------|---------------------------------|
-| 1  | gas_station.shp | vector      | point | Gas station locations in Ghana  |
+- **Example**: As an example, we will use **DBSCAN clustering** to identify 
+  clusters of gas stations within Ghana. The datasets used are listed below:
+
+| ID | File Name       | Data Format | Type  | Description                    |
+|----|-----------------|-------------|-------|--------------------------------|
+| 1  | gas_station.shp | vector      | point | Gas station locations in Ghana |
 
 The two figures below display the parameter settings and the output of the tool.
 
@@ -147,36 +144,42 @@ The two figures below display the parameter settings and the output of the tool.
 
 
 
-### 2. Proximity
-The **Proximity** tool calculates the Euclidean distance from the center of the source cell 
-to the center of each of the surrounding cells. Conceptually, the Euclidean algorithm works 
-as follows: for each cell, the distance to each source cell is determined by calculating 
-the hypotenuse with x_max and y_max as the other two legs of the triangle. This calculation
-derives the true Euclidean distance, rather than the cell distance. The shortest distance 
-to a source is determined, and if it is less than the specified maximum distance, the 
-value is assigned to the cell location on the output raster.
+### 2.2 Proximity
+The **Proximity** tool calculates the <u>**Euclidean distance**</u> from the 
+center of the source cell to the center of each of the surrounding cells. 
+Conceptually, the Euclidean algorithm works as follows: for each cell, the 
+distance to each source cell is determined by calculating the hypotenuse with 
+x_max and y_max as the other two legs of the triangle. This calculation derives
+the true Euclidean distance, rather than the cell distance. The shortest 
+distance to a source is determined, and if it is less than the specified 
+maximum distance, the value is assigned to the cell location on the output 
+raster.
 
 
-![Euclidean distance using trig](./pictures/EucDistEx2.gif)
+|![Euclidean distance using trig](./pictures/EucDistEx2.gif)|
+|:---------------------------------------------------------:|
+|Determining true Euclidean distance. _Source_: [ESRI (2021)](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/understanding-euclidean-distance-analysis.htm)|
 
 
-### 2.1 Usage
-This tool gives the measured Euclidean distance from every cell to the nearest source.
-The distances are measured in the projection units of the raster, such as feet or meters,
-and are measured from cell center to cell center.
+- **Usage**:
+  This tool gives the measured Euclidean distance from every cell to the 
+  nearest source. The distances are measured in the projection units of the 
+  raster, such as feet or meters,and are measured from cell center to cell 
+  center.
 
->:pushpin: The projected units of a raster layer can be found under the _information_ tab
-> in the layer properties
+>:pushpin: The projected units of a raster layer can be found under the 
+>_information_ tab in the layer properties
 
-### 2.2 Example
-Now we will use the **Proximity** tool in order to determine the Euclidean distance from 
-a gas station cluster to the rest of the raster cells.
+- **Example**:
+  Now we will use the **Proximity** tool in order to determine the Euclidean 
+  distance from a gas station cluster to the rest of the raster cells.
 
 | ID | File Name      | Data Format | Description                |
 |----|----------------|-------------|----------------------------|
 | 1  | r_cluster1.tif | raster      | Cluster 1 in raster format |
 
-The two figures below illustrate the parameters and output of the **Proximity** tool.
+The two figures below illustrate the parameters and output of the **Proximity**
+tool.
 
 | Parameter Settings       | Output      |
 | ------------------------ | ----------- |
@@ -184,28 +187,30 @@ The two figures below illustrate the parameters and output of the **Proximity** 
 
 
 
-### 3. Raster Calculator
-The **Raster calculator** tool allows you to create and execute a Map Algebra expression
-that will output a raster. We will be using a distance decay model in order to assign
-weights to each cluster. Distance decay, also known as the Gravity Model or the 
-Inverse Square Law, is the tendency of a spatial relationship between one place and 
-another to weaken as the distance between them increases.
+### 2.3 Raster Calculator
+The **Raster calculator** tool allows you to create and execute a Map Algebra 
+expression that will output a raster. We will be using a distance decay model 
+in order to assign weights to each cluster. Distance decay, also known as the 
+Gravity Model or the Inverse Square Law, is the tendency of a spatial 
+relationship between one place and another to weaken as the distance between 
+them increases.
 
-### 3.1 Usage
-The **Raster calculator** tool is used to individually weight and multiply proximity 
-rasters together.
+- **Usage**:
+  The **Raster calculator** tool is used to individually weight and multiply 
+  proximity rasters together.
 - The weighting formula that we will use is: 1/W*Cluster
 - W = # of points in a cluster / # of total points
 
 
-### 3.2 Example
+  **Example**:
 
 | ID | File Name            | Data Format | Description                       |
 |----|----------------------|-------------|-----------------------------------|
 | 1  | cluster1_euc_dst.tif | raster      | Euclidean distance from cluster 1 |
 | 2  | cluster2_euc_dst.tif | raster      | Euclidean distance from cluster 2 |
 
-The figures below show the parameters and output of the **Raster calculator** tool.
+The figures below show the parameters and output of the **Raster calculator** 
+tool.
 
 | Parameter Settings       | Output      |
 | ------------------------ | ----------- |
@@ -213,20 +218,21 @@ The figures below show the parameters and output of the **Raster calculator** to
 
 
 
-### 4. Reclassify by Table 
-**Reclassify by table** is a tool that reclassifies a raster band by assigning new class values based on
-ranges specified in a fixed table.
+### 2.4 Reclassify by Table 
+**Reclassify by table** is a tool that reclassifies a raster band by assigning 
+new class values based on ranges specified in a fixed table.
 
-### 4.1 Usage
-This tool is used to reclassify raster values. 
+- **Usage**:
+  This tool is used to reclassify raster values. 
 
-### 4.2 Example
+- **Example**:
 
 | ID | File Name              | Data Format | Description                                            |
 |----|------------------------|-------------|--------------------------------------------------------|
 | 1  | euc_cluster_output.tif | raster      | Result of adding together the weighted clusters 1 and 2|
 
-The figures below show the parameters and output for the **Reclassify by table** tool.
+The figures below show the parameters and output for the 
+**Reclassify by table** tool.
 
 > :pushpin: Check the details of an image:  
 > If you can't see the image clearly, click on the image to view it in a
@@ -237,15 +243,16 @@ The figures below show the parameters and output for the **Reclassify by table**
 | ![Reclassify parameters](./pictures/RclsfyP1.jpg) | ![Reclassify table parameters](./pictures/RclsfyP2.jpg)|![Raster Calculator output](./pictures/RclsfyEx.jpg)|
 
 
-### 5. Subdivide 
-is a tool that subdivides the original geometry into smaller parts, where no part has more
-than the specified maximum number of nodes. 
+### 2.5 Subdivide 
+is a tool that subdivides the original geometry into smaller parts, where no 
+part has more than the specified maximum number of nodes. 
 
-### 5.1 Usage
-The **subdivide** tool is used to break down complex geometries into more manageable parts.
-In our case, this tool allows us to subdivide large areas of land into IDU's.
+- **Usage**
+  The **subdivide** tool is used to break down complex geometries into more 
+  manageable parts. In our case, this tool allows us to subdivide large areas 
+  of land into IDU's.
 
-### 5.2 Example
+- **Example**:
 
 | ID | File Name        | Data Format |Type    | Description                     |
 |----|------------------|-------------|--------|---------------------------------|
@@ -253,9 +260,30 @@ In our case, this tool allows us to subdivide large areas of land into IDU's.
 
 The figures below show the parameters and output for the **Subdivide** tool.
 
-| Parameter Settings       | Output      |
-| ------------------------ | ----------- |
-| ![Raster calculator parameters](./pictures/SubDivParameters.jpg)| ![Subdivide output](./pictures/SubDivEx.jpg)|
+|Input | Parameter Settings       | Output      |
+|------| ------------------------ | ----------- |
+|![Subdivide Input](./pictures/SubDivBaseEx.jpg)| ![Raster calculator parameters](./pictures/SubDivParameters.jpg)| ![Subdivide output](./pictures/SubDivEx.jpg)|
+
+## 3. IDU Workflow (This list is currently just for Alex so he doesn't forget
+## where he left off)
+
+1. Starting layers are drainage_re and isda_mgrs
+2. Reclassify these layers as prime numbers (so we can keep track of what
+  becomes what)
+3. Use raster calculator to add reclassified layers together
+4. Identify where drainage_re 3,4,5 overlap with isda_mgrs 6
+5. Then use raster pixels to points 
+6. Extract by attribute the identified points
+7. Use DBSCAN clustering on these points
+8. Extract each of the clusters by cluster_ID attribute
+9. Rasterize each of the clusters
+10. Create proximity maps for each cluster
+11. Then use raster calculator and inverse squares weighting in order to get a 
+  map that includes all clusters and their influence
+12. Reclassify by table to find poly_inner and poly_outer
+13. Vectorize and extract by attribute to create poly_inner and poly_outer
+14. Go back to the combined isda_re and drainage_re
+15. 
 
 ## Exercise and Post-training Survey
 * Please complete the Exercise 1.
