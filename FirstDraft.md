@@ -11,12 +11,9 @@
     - [2.3 Raster Calculator](#23-raster-calculator)
     - [2.4 Reclassify by Table](#24-reclassify-by-table)
     - [2.5 Subdivide](#25-subdivide)
-  - [3. IDU Workflow (This list is currently just for Alex so he doesn't forget](#3-idu-workflow-this-list-is-currently-just-for-alex-so-he-doesnt-forget)
-  - [where he left off)](#where-he-left-off)
+  - [3. IDU Workflow](#3-idu-workflow)
   - [Exercise and Post-training Survey](#exercise-and-post-training-survey)
   - [Reference](#reference)
-  - [Exercise 1](#exercise-1)
-    - [1. Skills Practiced](#1-skills-practiced)
 
 ## 1. Introduction
 
@@ -264,26 +261,18 @@ The figures below show the parameters and output for the **Subdivide** tool.
 |------| ------------------------ | ----------- |
 |![Subdivide Input](./pictures/SubDivBaseEx.jpg)| ![Raster calculator parameters](./pictures/SubDivParameters.jpg)| ![Subdivide output](./pictures/SubDivEx.jpg)|
 
-## 3. IDU Workflow (This list is currently just for Alex so he doesn't forget
-## where he left off)
+## 3. IDU Workflow
 
-1. Starting layers are drainage_re and isda_mgrs
-2. Reclassify these layers as prime numbers (so we can keep track of what
-  becomes what)
-3. Use raster calculator to add reclassified layers together
-4. Identify where drainage_re 3,4,5 overlap with isda_mgrs 6
-5. Then use raster pixels to points 
-6. Extract by attribute the identified points
-7. Use DBSCAN clustering on these points
-8. Extract each of the clusters by cluster_ID attribute
-9. Rasterize each of the clusters
-10. Create proximity maps for each cluster
-11. Then use raster calculator and inverse squares weighting in order to get a 
-  map that includes all clusters and their influence
-12. Reclassify by table to find poly_inner and poly_outer
-13. Vectorize and extract by attribute to create poly_inner and poly_outer
-14. Go back to the combined isda_re and drainage_re
-15. 
+The diagrams below show the general process of the IDU workflow.
+|Developing urban clusters                           |
+|----------------------------------------------------|
+|![IDU Workflow Part 1](./pictures/IDU_diagram_1.svg)|
+
+|Calculating IDU's                                   |
+|----------------------------------------------------|
+|![IDU Workflow Part 2](./pictures/IDU_diagram_2.svg)|
+
+
 
 ## Exercise and Post-training Survey
 * Please complete the Exercise 1.
@@ -293,15 +282,3 @@ The figures below show the parameters and output for the **Subdivide** tool.
 
 1. <a id="a framework for land evaluation"></a>FAO. (1976). A framework for land evaluation (No. 32; Soils Bulletins). Food and Agriculture Organization of the United Nations. http://www.fao.org/3/X5310E/x5310e00.htm
 2. <a id="land evaluation for development"></a>FAO. (1990). Land evaluation for development. Food and Agriculture Organization of the United Nations. https://www.fao.org/3/U1980E/u1980e00.htm
-
-
-## Exercise 1
-### 1. Skills Practiced
-* Development of IDU's
-
-This exercise will utilize the following tools:
-1. DBSCAN Clustering
-2. Proximity
-3. Raster Calculator
-4. Reclassify by Table
-5. Subdivide
