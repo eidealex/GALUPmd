@@ -272,6 +272,18 @@ The diagrams below show the general process of the IDU workflow.
 |----------------------------------------------------|
 |![IDU Workflow Part 2](./pictures/IDU_diagram_2.svg)|
 
+>:pushpin: When selecting small polygons to eliminate, an area column must be
+>calculated for for the rural and urban vector files. This can be done by 
+>opening the layer's attribute table and calculating a new field based on the 
+>'$area'.
+
+>:pushpin: If you are having trouble permanently saving your subdivided
+>polygons, delete the 'fid' from the FID row under the 'layer options' of 
+>the 'Save Feature Layer as...'
+
+|Final IDU Map                                   |
+|------------------------------------------------|
+|![IDU Workflow Part 1](./pictures/final_IDU.png)|
 
 
 ## Exercise and Post-training Survey
