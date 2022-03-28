@@ -197,6 +197,7 @@ them increases.
   proximity rasters together.
 - The weighting formula that we will use is: 1/W*Cluster
 - W = # of points in a cluster / # of total points
+- 1/"clus1_prox328@1"*.38 + 1/"clus2_prox328@1"*.06 + 1/"clus3_prox_328@1"*.08 + 1/"clus4_prox328@1"*.2 + 1/"clus5_prox328@1"*.12 + 1/"clus6_prox328@1"*.09 + 1/"clus7_prox328@1"*.06
 
 
   **Example**:
